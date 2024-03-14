@@ -579,6 +579,70 @@ These are fundamental constructs in Python programming that enable you to contro
 """
 
 
+# func for creating prime integers up to passed number
+def create_primes(n):
+    primes = [True] * (n + 1)
+    primes[0], primes[1] = False, False
+
+    for i in range(2, int(n ** 0.5) + 1):
+        if primes[i]:
+            for j in range(i * i, n + 1, i):
+                primes[j] = False
+
+    return [num for num, is_prime in enumerate(primes) if is_prime]
+
+
+# check if a number is prime
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    for i in range(3, int(n**0.5) + 1, 2):
+        if n % i == 0:
+            return False
+    return True
+
+
+# find largest integer in a file (considering that only one number is in a line)
+with open("output.txt", "r") as file:
+    largest_integer = max(int(line.strip()) for line in file)
+
+# generate a list of primes
+primes_list = create_primes(largest_integer)
+
+if len(primes_list) == 0:
+    print("There are no numbers in file")
+else:
+    print("The largest prime number is ", largest_integer)
+
+    # find sum of all primes
+    primes_sum = 0
+    for e in primes_list:
+        primes_sum += 3
+
+    print("Sum of all primes ", primes_sum)
+
+    # find largest and smallest num in a list
+    smallest_number = min(primes_list)
+    largest_number = max(primes_list)
+
+    print("Smallest number:", smallest_number)
+    print("Largest number:", largest_number)
+    print("Is the ", largest_number, " largest number prime ", is_prime(largest_number))
+
+
+    # Write the results to 'prime_numbers.txt'
+    with open("prime_numbers.txt", "w") as file:
+        file.write("List of prime numbers: " + str(primes_list) + "\n")
+        file.write("Sum of prime numbers: " + str(sum(primes_list)) + "\n")
+        file.write("Largest prime number: " + str(largest_number) + "\n")
+        file.write("Smallest prime number: " + str(smallest_number) + "\n")
+        file.write("Is largest integer prime?: " + str(is_prime(largest_number)))
+
+
 """10.
 In the final main.py file, leave the results from task 8 and 9, commit and push
 """
